@@ -1,0 +1,57 @@
+# basic configs
+scale: 4
+manual_seed: 0
+verbose: false
+
+
+# dataset configs
+dataset:
+  degradation:
+    type: BD
+    sigma: 1.5
+
+  test1:
+    name: Vid4
+    gt_seq_dir: data/Vid4/GT
+    lr_seq_dir: data/Vid4/Gaussian4xLR
+    filter_file: ~
+    num_workers: 4
+    pin_memory: true
+
+  test2:
+    name: ToS3
+    gt_seq_dir: data/ToS3/GT
+    lr_seq_dir: data/ToS3/Gaussian4xLR
+    filter_file: ~
+    num_workers: 4
+    pin_memory: true
+
+  test3:
+    name: Gvt72
+    gt_seq_dir: data/Gvt72/GT
+    lr_seq_dir: data/Gvt72/Gaussian4xLR
+    filter_file: ~
+    num_workers: 4
+    pin_memory: true
+
+# model configs
+model:
+  name: ESPCN
+
+  generator:
+    name: ESPNet  # ESPCN network
+    in_nc: 1
+    out_nc: 1
+    up_method: subconv
+    load_path: pretrained_models/espcn_x4_subconv_100.pth
+
+
+# test configs
+test:
+  # whether to save the SR results
+  save_res: true
+  res_dir: results
+
+  # temporal padding
+  padding_mode: reflect
+  num_pad_front: 5

@@ -1,0 +1,43 @@
+# basic configs
+scale: 4
+manual_seed: 0
+verbose: false
+
+
+# dataset configs
+dataset:
+  degradation:
+    type: BI
+    sigma: 1.5
+
+  test1:
+    name: Vid4
+    gt_seq_dir: ../../data/Vid4/GT
+    lr_seq_dir: ../../data/Vid4/Gaussian4xLR
+    filter_file: ~
+    num_workers: 4
+    pin_memory: true
+
+
+# model configs
+model:
+  name: FRVSR
+
+  generator:
+    name: FRNet  # frame-recurrent network
+    in_nc: 3
+    out_nc: 3
+    nf: 64
+    nb: 10
+    load_path: ../../pretrained_models/FRVSR_BD_iter400000.pth
+
+
+# test configs
+test:
+  # whether to save the SR results
+  save_res: true
+  res_dir: results
+
+  # temporal padding
+  padding_mode: reflect
+  num_pad_front: 5

@@ -1,0 +1,148 @@
+# basic configs
+scale: 4
+manual_seed: 0
+verbose: true
+
+
+# dataset configs
+dataset:
+  degradation:
+    type: BI
+
+  train:
+    name: VimeoTecoGAN
+    gt_seq_dir: data/VimeoTecoGAN/GT.lmdb
+    lr_seq_dir: data/VimeoTecoGAN/Bicubic4xLR.lmdb
+    filter_file: ~
+    data_type: rgb
+    gt_crop_size: 128
+    batch_size: 4
+    num_workers: 4
+    pin_memory: true
+
+  test:
+    name: Vid4
+    gt_seq_dir: data/Vid4/GT
+    lr_seq_dir: data/Vid4/Bicubic4xLR
+    filter_file: ~
+    num_workers: 4
+    pin_memory: true
+
+
+# model configs
+model:
+  name: TecoGAN
+
+  generator:
+    name: FRNet  # frame-recurrent network
+    in_nc: 3
+    out_nc: 3
+    nf: 64
+    nb: 10
+    load_path: pretrained_models/FRVSR_BI_iter400000.pth
+
+  discriminator:
+    name: STNet  # spatio-temporal network
+    in_nc: 3
+    tempo_range: 3
+    load_path: ~
+
+
+# training configs
+train:
+  tempo_extent: 10
+
+  start_iter: 0
+  total_iter: 500000
+
+  # configs for generator
+  generator:
+    lr: !!float 5e-5
+    lr_schedule:
+      type: FixedLR
+    beta1: 0.9
+    beta2: 0.999
+
+  # configs for discriminator
+  discriminator:
+    update_policy: adaptive
+    update_threshold: 0.4
+    crop_border_ratio: 0.75
+    lr: !!float 5e-5
+    lr_schedule:
+      type: FixedLR
+    beta1: 0.9
+    beta2: 0.999
+
+  # other configs
+  moving_first_frame: true
+  moving_factor: 0.7
+
+  # criterions
+  pixel_crit:
+    type: CB
+    weight: 1
+    reduction: mean
+
+  warping_crit:
+    type: CB
+    weight: 1
+    reduction: mean
+
+  feature_crit:
+    type: CosineSimilarity
+    weight: 0.2
+    reduction: mean
+    feature_layers: [8, 17, 26, 35]
+
+  pingpong_crit:
+    type: CB
+    weight: 0.5
+    reduction: mean
+
+  gan_crit:
+    type: GAN
+    weight: 0.01
+    reduction: mean
+
+
+# validation configs
+test:
+  test_freq: 10000
+
+  # whether to save the generated SR results
+  save_res: false
+  res_dir: ~   # use default dir
+
+  # whether to save the test results in a json file
+  save_json: true
+  json_dir: ~  # use default dir
+
+  padding_mode: reflect
+  num_pad_front: 5
+
+
+# metric configs
+metric:
+  PSNR:
+    colorspace: y
+    mult: 1.0
+
+  LPIPS:
+    model: net-lin
+    net: alex
+    colorspace: rgb
+    spatial: false
+    version: 0.1
+    mult: 1.0
+
+  tOF:
+    mult: 1.0
+
+
+# logger configs
+logger:
+  log_freq: 100
+  decay: 0.99
+  ckpt_freq: 20000
+

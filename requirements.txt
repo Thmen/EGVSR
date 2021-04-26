@@ -1,0 +1,8 @@
+lmdb
+numpy
+matplotlib
+opencv-python  # or opencv or opencv-contrib-python
+pyyaml
+scipy
+scikit-image
+tqdm # process bar

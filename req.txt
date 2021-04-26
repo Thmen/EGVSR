@@ -1,0 +1,46 @@
+absl-py==0.11.0
+certifi==2020.12.5
+chardet==4.0.0
+cycler==0.10.0
+decorator==4.4.2
+flow-vis==0.1
+future==0.18.2
+idna==2.10
+imageio==2.9.0
+jsonpatch==1.32
+jsonpointer==2.1
+kiwisolver @ file:///tmp/build/80754af9/kiwisolver_1604014532738/work
+lmdb==1.0.0
+matplotlib @ file:///tmp/build/80754af9/matplotlib-base_1603376012865/work
+mkl-fft==1.2.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+networkx==2.5
+numpy @ file:///tmp/build/80754af9/numpy_and_numpy_base_1603479632437/work
+olefile==0.46
+opencv-python==4.5.1.48
+pandas==1.2.1
+Pillow @ file:///tmp/build/80754af9/pillow_1609786740831/work
+pyparsing==2.4.7
+PyQt5-sip==12.8.1
+python-dateutil==2.8.1
+pytz @ file:///tmp/build/80754af9/pytz_1612215392582/work
+PyWavelets==1.1.1
+PyYAML==5.3.1
+pyzmq==22.0.3
+requests==2.25.1
+scikit-image==0.18.1
+scipy==1.6.0
+six @ file:///tmp/build/80754af9/six_1605205313296/work
+tifffile==2021.1.8
+torch==1.7.1
+torchfile==0.1.0
+torchnet==0.0.5.1
+torchsummary==1.5.1
+torchvision==0.8.2
+tornado @ file:///tmp/build/80754af9/tornado_1606942283357/work
+tqdm==4.56.0
+typing-extensions @ file:///tmp/build/80754af9/typing_extensions_1598376058250/work
+urllib3==1.26.4
+visdom==0.1.8.9
+websocket-client==0.58.0
