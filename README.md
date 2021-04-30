@@ -31,7 +31,7 @@ This is a PyTorch implementation of **EGVSR**: **E**fficcient & **G**eneral Vide
 
 ## Features
 - **Unified Framework**: This repo provides a unified framework for various state-of-the-art DL-based VSR methods, such as VESPCN, SOFVSR, FRVSR, TecoGAN and our EGVSR.
-- - **Multiple Test Datasets**: This repo offers three types of video datasets for testing, i.e., standard test dataset -- Vid4, Tos3 used in TecoGAN and our new dataset -- Gvt72 (selected from [Vimeo](https://vimeo.com) site and including more scenes).
+- **Multiple Test Datasets**: This repo offers three types of video datasets for testing, i.e., standard test dataset -- Vid4, Tos3 used in TecoGAN and our new dataset -- Gvt72 (selected from [Vimeo](https://vimeo.com) site and including more scenes).
 - **Better Performance**: This repo provides model with faster inferencing speed yet better overall performance than prior methods. See more details in [Benchmarks](#benchmarks) section.
 
 
