@@ -1,8 +1,10 @@
 # EGVSR-PyTorch
+[GitHub](https://github.com/Thmen/EGVSR) **|** [Gitee码云](https://gitee.com/Digital-Design/EGVSR)
 
 <p align = "center">
     <img src="results/city.gif" width="480" /><br>VSR x4: EGVSR; Upscale x4: Bicubic Interpolation
 </p>
+
 
 ## Contents
 - [EGVSR-PyTorch](#egvsr-pytorch)
@@ -55,7 +57,7 @@ Download the official training dataset based on the instructions in [TecoGAN-Ten
     <img src="results/gvt72_preview.gif" width="640" />
 </p>
 
-
+You can get them at :arrow_double_down: [百度网盘](https://pan.baidu.com/s/1lKyLJ5u6lrrXejyljao0Mw) (提取码:8tqc) and put them into :file_folder: [Datasets](data).
 The following shows the structure of the above three datasets.
 ```tex
 data
@@ -117,17 +119,18 @@ data
 
 ### D. Optical-Flow based Motion Compensation
 
-Please refer to [FLOW_walk](result/seq_flow_walk.png), [FLOW_foliage](result/seq_flow_foliage.png) and [FLOW_city](result/seq_flow_city.png).
+Please refer to [FLOW_walk](results/seq_flow_walk.png), [FLOW_foliage](results/seq_flow_foliage.png) and [FLOW_city](results/seq_flow_city.png).
 
 ### E. Comprehensive Performance
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
+<!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 
 $$M_{nor}=(M-M_{min})/(M_{max}-M_{min})) \\
-Score=1-(\lambda_{1}LPIPS_{nor}+\lambda_{2}tOF{nor}+\lambda_{3}tLP100_{nor})[2]$$
+Score=1-(\lambda_{1}LPIPS_{nor}+\lambda_{2}tOF{nor}+\lambda_{3}tLP100_{nor})[2]$$ -->
 
 
 <p align = "center">
+  <img src="resources/score_formula.png" width="540" />
   <img src="results/performance.png" width="640" />
   <br> Comparison of various SOTA VSR model on video quality score and speed performance[3]
 </p>
