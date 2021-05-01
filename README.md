@@ -136,14 +136,16 @@ Score=1-(\lambda_{1}LPIPS_{nor}+\lambda_{2}tOF{nor}+\lambda_{3}tLP100_{nor})[2]$
 </p>
 
 
-> <sup>[1]</sup> $\downarrow$: smaller value for better performance, $\uparrow$: on the contrary; Red: stands for Top1, Blue: Top2.
+> <sup>[1]</sup> :arrow_down::smaller value for better performance, :arrow_up:: on the contrary; Red: stands for Top1, Blue: Top2.
+> 
 > <sup>[2]</sup> The calculation formula of video quality score considering both spatial and temporal domain, using lambda1=lambda2=lambda3=1/3.
+> 
 > <sup>[3]</sup> FLOPs & speed are computed on RGB with resolution 960x540 to 3840x2160 (4K) on NVIDIA GeForce GTX 2080Ti GPU.
 
 
 ## License & Citations
 This EGVSR project is released under the MIT license. See more details in [LICENSE](LICENSE).
-The provided implementation is strictly for academic purposes only. If BasicSR helps your research or work, please consider citing BasicSR. The following is a BibTeX reference:
+The provided implementation is strictly for academic purposes only. If EGVSR helps your research or work, please consider citing EGVSR. The following is a BibTeX reference:
 
 ``` latex
 @misc{thmen2021egvsr,
