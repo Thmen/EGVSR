@@ -26,13 +26,13 @@
 
 
 ## Introduction
-This is a PyTorch implementation of **EGVSR**: **E**fficcient & **G**eneral Video Super-Resolution (**VSR**), using subpixel convolution to optimize the inference speed of TecoGAN VSR model. Please refer to the official implementation [ESPCN](https://github.com/leftthomas/ESPCN) and [TecoGAN](https://github.com/thunil/TecoGAN) for more information.
+This is a PyTorch implementation of **EGVSR**: **E**fficcient & **G**eneric Video Super-Resolution (**VSR**), using subpixel convolution to optimize the inference speed of TecoGAN VSR model. Please refer to the official implementation [ESPCN](https://github.com/leftthomas/ESPCN) and [TecoGAN](https://github.com/thunil/TecoGAN) for more information.
 
 
 ## Features
 - **Unified Framework**: This repo provides a unified framework for various state-of-the-art DL-based VSR methods, such as VESPCN, SOFVSR, FRVSR, TecoGAN and our EGVSR.
 - **Multiple Test Datasets**: This repo offers three types of video datasets for testing, i.e., standard test dataset -- Vid4, Tos3 used in TecoGAN and our new dataset -- Gvt72 (selected from [Vimeo](https://vimeo.com) site and including more scenes).
-- **Better Performance**: This repo provides model with faster inferencing speed yet better overall performance than prior methods. See more details in [Benchmarks](#benchmarks) section.
+- **Better Performance**: This repo provides model with faster inferencing speed and better overall performance than prior methods. See more details in [Benchmarks](#benchmarks) section.
 
 
 ## Dependencies
@@ -51,7 +51,7 @@ Download the official training dataset based on the instructions in [TecoGAN-Ten
 ### B. Testing Datasets
 * Vid4 -- Four video sequences: city, calendar, foliage and walk;
 * Tos3 -- Three video sequences: bridge, face and room;
-* Gvt72 -- General VSR Test Dataset: 72 video sequences (including natural scenery, culture scenery, streetscape scene, life record, sports photography, etc, as shown below)
+* Gvt72 -- Generic VSR Test Dataset: 72 video sequences (including natural scenery, culture scenery, streetscape scene, life record, sports photography, etc, as shown below)
 
 <p align = "center">
     <img src="results/gvt72_preview.gif" width="640" />
@@ -147,14 +147,14 @@ The provided implementation is strictly for academic purposes only. If EGVSR hel
 
 ``` latex
 @misc{thmen2021egvsr,
-  author =       {Yanpeng Cao and Chengcheng Wang and Feng Yu and Yongming Tang},
+  author =       {Yanpeng Cao, Chengcheng Wang, Changjun Song, Yongming Tang and He Li},
   title =        {EGVSR},
   howpublished = {\url{https://github.com/Thmen/EGVSR}},
   year =         {2021}
 }
 ```
 
-> Yanpeng Cao, Chengcheng Wang, Feng Yu and Yongming Tang. EGVSR. https://github.com/Thmen/EGVSR, 2021.
+> Yanpeng Cao, Chengcheng Wang, Changjun Song, Yongming Tang and He Li. EGVSR. https://github.com/Thmen/EGVSR, 2021.
 
 
 ## Acknowledgements
