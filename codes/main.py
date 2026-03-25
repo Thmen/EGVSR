@@ -173,10 +173,12 @@ def test(opt):
             logger.info('Testing on {}: {}'.format(dataset_idx, ds_name))
 
             # define metric calculator
-            try:
-                metric_calculator = MetricCalculator(opt)
-            except:
-                print('No metirc need to compute!')
+            metric_calculator = None
+            if opt.get('metric'):
+                try:
+                    metric_calculator = MetricCalculator(opt)
+                except Exception as e:
+                    logger.warning('Failed to create MetricCalculator: {}'.format(e))
 
             # create data loader
             test_loader = create_dataloader(opt, dataset_idx=dataset_idx)
@@ -199,25 +201,24 @@ def test(opt):
                     data_utils.save_sequence(res_seq_dir, hr_seq, frm_idx, to_bgr=True)
 
                 # compute metrics for the current sequence
-                true_seq_dir = osp.join(opt['dataset'][dataset_idx]['gt_seq_dir'], seq_idx)
-                try:
-                    metric_calculator.compute_sequence_metrics(seq_idx, true_seq_dir, '', pred_seq=hr_seq)
-                except:
-                    print('No metirc need to compute!')
+                if metric_calculator is not None:
+                    true_seq_dir = osp.join(opt['dataset'][dataset_idx]['gt_seq_dir'], seq_idx)
+                    try:
+                        metric_calculator.compute_sequence_metrics(seq_idx, true_seq_dir, '', pred_seq=hr_seq)
+                    except Exception as e:
+                        logger.warning('Failed to compute metrics for {}: {}'.format(seq_idx, e))
 
             # save/print metrics
-            try:
-                if opt['test'].get('save_json'):
-                    # save results to json file
-                    json_path = osp.join(
-                        opt['test']['json_dir'], '{}_avg.json'.format(ds_name))
-                    metric_calculator.save_results(model_idx, json_path, override=True)
-                else:
-                    # print directly
-                    metric_calculator.display_results()
-
-            except:
-                print('No metirc need to save!')
+            if metric_calculator is not None:
+                try:
+                    if opt['test'].get('save_json'):
+                        json_path = osp.join(
+                            opt['test']['json_dir'], '{}_avg.json'.format(ds_name))
+                        metric_calculator.save_results(model_idx, json_path, override=True)
+                    else:
+                        metric_calculator.display_results()
+                except Exception as e:
+                    logger.warning('Failed to save/display metrics: {}'.format(e))
 
             logger.info('-' * 40)
 

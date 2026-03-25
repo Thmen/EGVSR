@@ -1,6 +1,7 @@
 import os
 import os.path as osp
 import json
+import logging
 from collections import OrderedDict
 
 import numpy as np
@@ -74,32 +75,48 @@ class MetricCalculator():
         for metric_type in self.metric_opt.keys():
             metric_avg_per_seq = []
             for seq, metric_dict_per_seq in self.metric_dict.items():
-                metric_avg_per_seq.append(
-                    np.mean(metric_dict_per_seq[metric_type]))
+                values = metric_dict_per_seq[metric_type]
+                if len(values) > 0:
+                    metric_avg_per_seq.append(np.mean(values))
 
-            metric_avg_dict[metric_type] = np.mean(metric_avg_per_seq)
+            if len(metric_avg_per_seq) > 0:
+                metric_avg_dict[metric_type] = np.mean(metric_avg_per_seq)
+            else:
+                metric_avg_dict[metric_type] = float('nan')
 
         return metric_avg_dict
 
     def display_results(self):
         logger = base_utils.get_logger('base')
 
+        if not self.metric_dict:
+            logger.warning('No sequences were evaluated, no metrics to display')
+            return
+
         # per sequence results
         for seq, metric_dict_per_seq in self.metric_dict.items():
             logger.info('Sequence: {}'.format(seq))
             for metric_type in self.metric_opt.keys():
+                values = metric_dict_per_seq[metric_type]
                 mult = getattr(self, '{}_mult'.format(metric_type.lower()))
-                logger.info('\t{}: {:.6f} (x{})'.format(
-                    metric_type,
-                    mult*np.mean(metric_dict_per_seq[metric_type]), mult))
+                if len(values) > 0:
+                    logger.info('\t{}: {:.6f} (x{})'.format(
+                        metric_type, mult * np.mean(values), mult))
+                else:
+                    logger.warning('\t{}: N/A (no frames evaluated)'.format(
+                        metric_type))
 
         # average results
         logger.info('Average')
         metric_avg_dict = self.get_averaged_results()
         for metric_type, avg_result in metric_avg_dict.items():
             mult = getattr(self, '{}_mult'.format(metric_type.lower()))
-            logger.info('\t{}: {:.6f} (x{})'.format(
-                metric_type, mult*avg_result, mult))
+            if not np.isnan(avg_result):
+                logger.info('\t{}: {:.6f} (x{})'.format(
+                    metric_type, mult * avg_result, mult))
+            else:
+                logger.warning('\t{}: N/A (no valid results)'.format(
+                    metric_type))
 
     def save_results(self, model_idx, save_path, override=False):
         # load previous results if existed
@@ -158,9 +175,16 @@ class MetricCalculator():
         self.metric_dict[self.seq_idx_curr] = OrderedDict({
             metric: [] for metric in self.metric_opt.keys()})
 
-        # retrieve files
-        true_img_lst = base_utils.retrieve_files(true_seq_dir, 'png')
-        pred_img_lst = base_utils.retrieve_files(pred_seq_dir, 'png')
+        # retrieve files (support both png and jpg)
+        true_img_lst = base_utils.retrieve_files(true_seq_dir, 'png|jpg')
+        pred_img_lst = base_utils.retrieve_files(pred_seq_dir, 'png|jpg')
+
+        if len(true_img_lst) == 0:
+            logger = logging.getLogger('base')
+            logger.warning(
+                'No image files found in GT directory: {}. '
+                'Metrics will be empty for sequence: {}'.format(
+                    true_seq_dir, seq))
 
         # compute metrics for each frame
         for i in range(len(true_img_lst)):
