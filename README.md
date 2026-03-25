@@ -57,7 +57,12 @@ Download the official training dataset based on the instructions in [TecoGAN-Ten
     <img src="results/gvt72_preview.gif" width="640" />
 </p>
 
-You can get them at :arrow_double_down: [百度网盘](https://pan.baidu.com/s/1lKyLJ5u6lrrXejyljao0Mw) (提取码:8tqc) and put them into :file_folder: [Datasets](data).
+~~You can get them at :arrow_double_down: [百度网盘](https://pan.baidu.com/s/1lKyLJ5u6lrrXejyljao0Mw) (提取码:8tqc) and put them into :file_folder: [Datasets](data).~~
+
+> **Note**: The original Baidu Netdisk download link is no longer available. You can prepare the testing datasets manually:
+> - **Vid4**: A widely-used VSR benchmark. You can find it in many VSR repos such as [BasicSR](https://github.com/xinntao/BasicSR).
+> - **ToS3**: Three video sequences from the TecoGAN paper.
+> - Ensure GT images are in PNG format under `data/<dataset>/GT/<sequence>/` and LR images under `data/<dataset>/Gaussian4xLR/<sequence>/`.
 The following shows the structure of the above three datasets.
 ```tex
 data
