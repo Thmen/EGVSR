@@ -1,0 +1,11 @@
+# Python virtualenv created by the Cloud Agent environment setup
+.venv/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+
+# Synthetic demo dataset + generated SR results (reproducible via .cursor/demo)
+/data/Vid4/GT/demo/
+/data/Vid4/Gaussian4xLR/demo/
+/.cursor/demo/results/

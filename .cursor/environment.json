@@ -1,0 +1,5 @@
+{
+  "name": "EGVSR-PyTorch",
+  "user": "ubuntu",
+  "install": "bash .cursor/install.sh"
+}
