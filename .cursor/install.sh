@@ -16,7 +16,9 @@ fi
 export PATH="${HOME}/.local/bin:${PATH}"
 
 # ---- create the virtualenv (idempotent) ----
-uv venv --python 3.12 .venv
+if [ ! -x ".venv/bin/python" ]; then
+  uv venv --python 3.12 .venv
+fi
 
 # ---- install dependencies ----
 # CPU PyTorch (this environment has no GPU) resolved together with the rest so
