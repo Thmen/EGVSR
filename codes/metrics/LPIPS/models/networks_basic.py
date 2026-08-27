@@ -12,7 +12,10 @@ from skimage import color
 # from IPython import embed
 from . import pretrained_networks as pn
 
-import metrics.LPIPS.models as util
+# Note: the shared helpers live in this subpackage's __init__ (imported lazily
+# inside the methods below). Importing them at module load time would create a
+# circular import (models/__init__ -> dist_model -> networks_basic -> models),
+# which fails on some Python versions (see issue #11).
 
 def spatial_average(in_tens, keepdim=True):
     return in_tens.mean([2,3],keepdim=keepdim)
@@ -62,6 +65,7 @@ class PNetLin(nn.Module):
                 self.lins+=[self.lin5,self.lin6]
 
     def forward(self, in0, in1, retPerLayer=False):
+        from metrics.LPIPS import models as util
         # v0.0 - original release had a bug, where input was not scaled
         in0_input, in1_input = (self.scaling_layer(in0), self.scaling_layer(in1)) if self.version=='0.1' else (in0, in1)
         outs0, outs1 = self.net.forward(in0_input), self.net.forward(in1_input)
@@ -150,6 +154,7 @@ class FakeNet(nn.Module):
 class L2(FakeNet):
 
     def forward(self, in0, in1, retPerLayer=None):
+        from metrics.LPIPS import models as util
         assert(in0.size()[0]==1) # currently only supports batchSize 1
 
         if(self.colorspace=='RGB'):
@@ -167,6 +172,7 @@ class L2(FakeNet):
 class DSSIM(FakeNet):
 
     def forward(self, in0, in1, retPerLayer=None):
+        from metrics.LPIPS import models as util
         assert(in0.size()[0]==1) # currently only supports batchSize 1
 
         if(self.colorspace=='RGB'):

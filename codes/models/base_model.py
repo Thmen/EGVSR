@@ -86,7 +86,8 @@ class BaseModel():
         pass
 
     def load_network(self, net, load_path):
-        net.load_state_dict(torch.load(load_path))
+        # map to the current device so CUDA-saved checkpoints load on CPU too
+        net.load_state_dict(torch.load(load_path, map_location=self.device))
 
     def pad_sequence(self, lr_data):
         """

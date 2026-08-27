@@ -1,0 +1,59 @@
+# Demo test config for verifying the EGVSR environment end to end.
+# Uses only the synthetic Vid4 "demo" sequence produced by generate_demo_data.py,
+# so it does not depend on the full (externally hosted) datasets.
+
+# basic configs
+scale: 4
+manual_seed: 0
+verbose: false
+
+# dataset configs
+dataset:
+  degradation:
+    type: BD
+    sigma: 1.5
+
+  test1:
+    name: Vid4
+    gt_seq_dir: data/Vid4/GT
+    lr_seq_dir: data/Vid4/Gaussian4xLR
+    filter_file: ~
+    num_workers: 2
+    pin_memory: true
+
+# model configs
+model:
+  name: FRVSR
+
+  generator:
+    name: EGVSR
+    in_nc: 3
+    out_nc: 3
+    nf: 64
+    nb: 10
+    load_path: pretrained_models/EGVSR_iter420000.pth
+
+# test configs
+test:
+  save_res: true
+  res_dir: .cursor/demo/results
+
+  padding_mode: reflect
+  num_pad_front: 5
+
+# metric configs
+metric:
+  PSNR:
+    colorspace: y
+    mult: 1.0
+
+  LPIPS:
+    model: net-lin
+    net: alex
+    colorspace: rgb
+    spatial: false
+    version: 0.1
+    mult: 1.0
+
+  tOF:
+    mult: 1.0
