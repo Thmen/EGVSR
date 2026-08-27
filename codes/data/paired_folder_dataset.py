@@ -17,9 +17,19 @@ class PairedFolderDataset(BaseDataset):
         super(PairedFolderDataset, self).__init__(data_opt, **kwargs)
 
         # get keys
-        gt_keys = sorted(os.listdir(self.gt_seq_dir))
-        lr_keys = sorted(os.listdir(self.lr_seq_dir))
+        gt_keys = sorted(os.listdir(self.gt_seq_dir)) if osp.isdir(self.gt_seq_dir) else []
+        lr_keys = sorted(os.listdir(self.lr_seq_dir)) if osp.isdir(self.lr_seq_dir) else []
         self.keys = sorted(list(set(gt_keys) & set(lr_keys)))
+
+        # warn loudly when no paired sequences are found, otherwise the metrics
+        # silently come out as NaN (mean of empty slice), see issue #20
+        if not self.keys:
+            raise FileNotFoundError(
+                'No paired sequences found for dataset. Expected matching '
+                'sub-folders under GT dir "{}" and LR dir "{}". '
+                'Please check that the test datasets are downloaded and placed '
+                'correctly (see README > Datasets).'.format(
+                    self.gt_seq_dir, self.lr_seq_dir))
 
         # filter keys
         if self.filter_file:
